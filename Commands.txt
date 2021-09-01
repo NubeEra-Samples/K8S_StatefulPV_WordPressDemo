@@ -1,0 +1,43 @@
+0) Download All Files
+curl -LO https://k8s.io/examples/application/wordpress/mysql-deployment.yaml
+curl -LO https://k8s.io/examples/application/wordpress/wordpress-deployment.yaml
+
+cat <<EOF >./kustomization.yaml
+secretGenerator:
+- name: mysql-pass
+  literals:
+  - password=abc
+EOF
+
+erp1
+u504G(^Xc4GNhznDuf
+eWWOi!&HQ5dAxiBr8i
+
+
+cat <<EOF >>./kustomization.yaml
+resources:
+  - mysql-deployment.yaml
+  - wordpress-deployment.yaml
+EOF
+
+
+
+
+1) Apply and Verify
+kubectl apply -k ./
+
+2) Verify
+kubectl get secrets
+kubectl get pvc
+kubectl get pods
+
+3) Check Application Deployment of Wordpress services
+kubectl get services wordpress
+NAME        TYPE            CLUSTER-IP   EXTERNAL-IP   PORT(S)        AGE
+wordpress   LoadBalancer    10.0.0.89    <pending>     80:32406/TCP   4m
+
+
+4) Testing
+minikube service wordpress --url
+http://1.2.3.4:32406
+
